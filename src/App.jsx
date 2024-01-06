@@ -1,7 +1,9 @@
+import Navigation from "./components/navigation/Navigation";
+
 const App = () => {
   return (
-    <div className="App">
-      <h1 className="text-center bg-red-400 text-4xl">Hello react</h1>
+    <div className="w-full h-screen bg-slate-200">
+      <Navigation />
     </div>
   );
 };
