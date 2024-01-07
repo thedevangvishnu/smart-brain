@@ -1,4 +1,4 @@
-const InputSection = ({ onInputChange, onButtonPress, imageUrl }) => {
+const InputSection = ({ onInputChange, onButtonPress }) => {
   return (
     <div className="flex shadow-lg">
       <input
@@ -13,11 +13,6 @@ const InputSection = ({ onInputChange, onButtonPress, imageUrl }) => {
       >
         DETECT
       </button>
-
-      {/* image section */}
-      <div className="w-96 h-auto">
-        <img src={imageUrl} alt="Photo entered using the URL" />
-      </div>
     </div>
   );
 };

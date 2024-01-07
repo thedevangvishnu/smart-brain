@@ -1,7 +1,8 @@
 import { Component } from "react";
 import Navigation from "./components/navigation/Navigation";
 import HeroSection from "./components/hero-section/HeroSection";
-import DetectSection from "./components/detect-section/DetectSection";
+import InputSection from "./components/input-section/InputSection";
+import DetectImageSection from "./components/detect-image-section/DetectImageSection";
 
 // setup clarifai and return request options using it
 const returnRequestUsingClarafai = (imageUrl) => {
@@ -73,11 +74,11 @@ class App extends Component {
         <Navigation />
         <div className="flex flex-col items-center gap-10">
           <HeroSection />
-          <DetectSection
+          <InputSection
             onInputChange={this.onInputChange}
             onButtonPress={this.onButtonPress}
-            imageUrl={this.state.imageUrl}
           />
+          <DetectImageSection imageUrl={this.state.imageUrl} />
         </div>
       </div>
     );
