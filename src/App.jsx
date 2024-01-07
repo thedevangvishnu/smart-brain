@@ -52,6 +52,31 @@ class App extends Component {
     };
   }
 
+  displayFaceBox = (result) => {
+    const image = document.getElementById("input-image");
+    const imageWidth = Number(image.width);
+    const imageHeight = Number(image.height);
+
+    let faceBox = {};
+
+    const regions = result.outputs[0].data.regions;
+    regions.forEach((region) => {
+      // Accessing and rounding the bounding box values
+      const boundingBox = region.region_info.bounding_box;
+      const topRow = boundingBox.top_row;
+      const leftCol = boundingBox.left_col;
+      const bottomRow = boundingBox.bottom_row;
+      const rightCol = boundingBox.right_col;
+
+      faceBox.leftCol = leftCol * imageWidth;
+      faceBox.topRow = topRow * imageHeight;
+      faceBox.rightCol = imageWidth - rightCol * imageWidth;
+      faceBox.bottomRow = imageHeight - bottomRow * imageHeight;
+    });
+
+    console.log(faceBox);
+  };
+
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
@@ -60,11 +85,11 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
 
     fetch(
-      "https://api.clarifai.com/v2/models/" + "face - detection" + "/outputs",
-      returnRequestUsingClarafai
+      "https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs",
+      returnRequestUsingClarafai(this.state.input)
     )
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => this.displayFaceBox(result))
       .catch((error) => console.log("error", error));
   };
 
