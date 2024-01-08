@@ -51,6 +51,8 @@ class App extends Component {
       input: "",
       imageUrl: "",
       box: {},
+      route: "signIn",
+      signedIn: false,
     };
   }
 
@@ -99,21 +101,34 @@ class App extends Component {
       .catch((error) => console.log("error", error));
   };
 
+  onSignIn = (route) => {
+    this.setState({ route: route, signedIn: true });
+  };
+
+  onSignOut = (route) => {
+    this.setState({ route: route, signedIn: false });
+  };
+
   render() {
     return (
       <div className="w-full h-screen bg-slate-200">
-        <Navigation />
+        <Navigation signedIn={this.state.signedIn} onSignOut={this.onSignOut} />
         <div className="flex flex-col items-center gap-10">
           <HeroSection />
-          <SignIn />
-          <InputSection
-            onInputChange={this.onInputChange}
-            onButtonPress={this.onButtonPress}
-          />
-          <DetectImageSection
-            faceBox={this.state.box}
-            imageUrl={this.state.imageUrl}
-          />
+          {this.state.route === "signIn" ? (
+            <SignIn onSignIn={this.onSignIn} />
+          ) : (
+            <div className="flex flex-col gap-4 items-center relative">
+              <InputSection
+                onInputChange={this.onInputChange}
+                onButtonPress={this.onButtonPress}
+              />
+              <DetectImageSection
+                faceBox={this.state.box}
+                imageUrl={this.state.imageUrl}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
