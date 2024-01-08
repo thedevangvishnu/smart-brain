@@ -41,12 +41,13 @@ const SignIn = ({ onSignIn }) => {
           >
             Sign In
           </button>
-          <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          <p
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
             href="#"
+            onClick={() => onSignIn("register")}
           >
-            Forgot Password?
-          </a>
+            Register
+          </p>
         </div>
       </form>
     </div>
