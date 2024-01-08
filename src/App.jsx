@@ -49,10 +49,11 @@ class App extends Component {
     this.state = {
       input: "",
       imageUrl: "",
+      box: {},
     };
   }
 
-  displayFaceBox = (result) => {
+  calculateFaceBox = (result) => {
     const image = document.getElementById("input-image");
     const imageWidth = Number(image.width);
     const imageHeight = Number(image.height);
@@ -73,8 +74,12 @@ class App extends Component {
       faceBox.rightCol = imageWidth - rightCol * imageWidth;
       faceBox.bottomRow = imageHeight - bottomRow * imageHeight;
     });
+    return faceBox;
+  };
 
-    console.log(faceBox);
+  displayFaceBox = (box) => {
+    console.log(box);
+    this.setState({ box: box });
   };
 
   onInputChange = (event) => {
@@ -89,7 +94,7 @@ class App extends Component {
       returnRequestUsingClarafai(this.state.input)
     )
       .then((response) => response.json())
-      .then((result) => this.displayFaceBox(result))
+      .then((result) => this.displayFaceBox(this.calculateFaceBox(result)))
       .catch((error) => console.log("error", error));
   };
 
