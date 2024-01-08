@@ -108,7 +108,10 @@ class App extends Component {
             onInputChange={this.onInputChange}
             onButtonPress={this.onButtonPress}
           />
-          <DetectImageSection imageUrl={this.state.imageUrl} />
+          <DetectImageSection
+            faceBox={this.state.box}
+            imageUrl={this.state.imageUrl}
+          />
         </div>
       </div>
     );
