@@ -4,6 +4,7 @@ import HeroSection from "./components/hero-section/HeroSection";
 import InputSection from "./components/input-section/InputSection";
 import DetectImageSection from "./components/detect-image-section/DetectImageSection";
 import SignIn from "./components/sign-in/SignIn";
+import Register from "./components/register/Register";
 
 // setup clarifai and return request options using it
 const returnRequestUsingClarafai = (imageUrl) => {
@@ -109,15 +110,17 @@ class App extends Component {
     this.setState({ route: route, signedIn: false });
   };
 
+  onRegister = (route) => {
+    this.setState({ route: route, signedIn: true });
+  };
+
   render() {
     return (
       <div className="w-full h-screen bg-slate-200">
         <Navigation signedIn={this.state.signedIn} onSignOut={this.onSignOut} />
         <div className="flex flex-col items-center gap-10">
           <HeroSection />
-          {this.state.route === "signIn" ? (
-            <SignIn onSignIn={this.onSignIn} />
-          ) : (
+          {this.state.route === "home" ? (
             <div className="flex flex-col gap-4 items-center relative">
               <InputSection
                 onInputChange={this.onInputChange}
@@ -128,6 +131,10 @@ class App extends Component {
                 imageUrl={this.state.imageUrl}
               />
             </div>
+          ) : this.state.route === "signIn" ? (
+            <SignIn onSignIn={this.onSignIn} />
+          ) : (
+            <Register onRegister={this.onRegister} />
           )}
         </div>
       </div>
