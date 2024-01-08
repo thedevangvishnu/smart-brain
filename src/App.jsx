@@ -3,6 +3,7 @@ import Navigation from "./components/navigation/Navigation";
 import HeroSection from "./components/hero-section/HeroSection";
 import InputSection from "./components/input-section/InputSection";
 import DetectImageSection from "./components/detect-image-section/DetectImageSection";
+import SignIn from "./components/sign-in/SignIn";
 
 // setup clarifai and return request options using it
 const returnRequestUsingClarafai = (imageUrl) => {
@@ -104,6 +105,7 @@ class App extends Component {
         <Navigation />
         <div className="flex flex-col items-center gap-10">
           <HeroSection />
+          <SignIn />
           <InputSection
             onInputChange={this.onInputChange}
             onButtonPress={this.onButtonPress}
