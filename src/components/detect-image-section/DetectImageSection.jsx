@@ -5,11 +5,11 @@ const DetectImageSection = ({ imageUrl, faceBox }) => {
       <img
         id="input-image"
         src={imageUrl}
-        alt="Photo entered using the URL"
+        alt="Input entered using URL"
         className="w-full h-full"
       />
       <div
-        className={`absolute flex flex-wrap justify-center cursor-pointer border-4 border-solid border-yellow-400 shadow-inner`}
+        className={`absolute flex flex-wrap justify-center cursor-pointer  border-4 border-solid border-green-400 shadow-inner`}
         style={{
           top: topRow,
           right: rightCol,
