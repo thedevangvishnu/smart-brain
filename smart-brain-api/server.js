@@ -84,6 +84,26 @@ app.get("/profile/:id", (req, res) => {
 
 app.listen(3000);
 
+// Image route
+app.post("/image", (req, res) => {
+  const { id } = req.body;
+  const users = database.users;
+
+  let found = false;
+  users.forEach((user) => {
+    if (user.id == id) {
+      console.log(id);
+      found = true;
+      user.enteries++;
+      return res.json(user.enteries);
+    }
+  });
+
+  if (!found) {
+    res.status(404).json("User not found");
+  }
+});
+
 /*
 Major endpoints
     - /signIn --> POST = success/fail
