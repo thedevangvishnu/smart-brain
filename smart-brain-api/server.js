@@ -11,6 +11,14 @@ const database = {
       enteries: 0,
       joined: new Date(),
     },
+    {
+      id: "124",
+      username: "Sally",
+      email: "sally@gmail.com",
+      password: "salmon",
+      enteries: 0,
+      joined: new Date(),
+    },
   ],
 };
 
@@ -23,17 +31,20 @@ app.get("/", (req, res) => {
 // Sign in
 app.post("/signin", (req, res) => {
   const users = database.users;
-  for (let i = 0; i < users.length; i++) {
-    if (
-      req.body.email !== users[i].email ||
-      req.body.password !== users[i].password
-    ) {
-      res
-        .status(403)
-        .json("Invalid login credentials. Check username and passwrod");
-    }
+  const { email, password } = req.body;
 
-    res.json("Log in success!");
+  let isSignedIn = false;
+  users.forEach((user) => {
+    if (user.email === email && user.password === password) {
+      isSignedIn = true;
+      return res.json({ user, msg: "Sign in success" });
+    }
+  });
+
+  if (!isSignedIn) {
+    res
+      .status(403)
+      .json("Invalid login credentials. Check username and passwrod");
   }
 });
 
@@ -42,7 +53,7 @@ app.post("/register", (req, res) => {
   const { username, email, password } = req.body;
   const users = database.users;
   users.push({
-    id: "123",
+    id: "125",
     username: username,
     email: email,
     password: password,
@@ -51,6 +62,24 @@ app.post("/register", (req, res) => {
   });
 
   res.json(users[users.length - 1]);
+});
+
+// Profile/:id
+app.get("/profile/:id", (req, res) => {
+  const { id } = req.params;
+  const users = database.users;
+
+  let found = false;
+  users.forEach((user) => {
+    if (user.id === id) {
+      found = true;
+      return res.json(user);
+    }
+  });
+
+  if (!found) {
+    res.status(404).json("User not found");
+  }
 });
 
 app.listen(3000);
