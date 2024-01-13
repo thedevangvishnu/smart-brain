@@ -54,8 +54,30 @@ class App extends Component {
       box: {},
       route: "signIn",
       signedIn: false,
+      user: {
+        id: "",
+        username: "",
+        email: "",
+        password: "",
+        enteries: 0,
+        joined: "",
+      },
     };
   }
+
+  loadUser = (userData) => {
+    const { id, username, email, password, enteries, joined } = userData;
+    this.setState({
+      user: {
+        id: id,
+        username: username,
+        email: email,
+        password: password,
+        enteries: enteries,
+        joined: joined,
+      },
+    });
+  };
 
   calculateFaceBox = (result) => {
     const image = document.getElementById("input-image");
@@ -134,7 +156,7 @@ class App extends Component {
           ) : this.state.route === "signIn" ? (
             <SignIn onSignIn={this.onSignIn} />
           ) : (
-            <Register onRegister={this.onRegister} />
+            <Register loadUser={this.loadUser} onRegister={this.onRegister} />
           )}
         </div>
       </div>
