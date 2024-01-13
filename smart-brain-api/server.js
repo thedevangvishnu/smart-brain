@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const database = {
   users: [
@@ -23,6 +24,7 @@ const database = {
 };
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json(database.users);
@@ -82,8 +84,6 @@ app.get("/profile/:id", (req, res) => {
   }
 });
 
-app.listen(3000);
-
 // Image route
 app.post("/image", (req, res) => {
   const { id } = req.body;
@@ -92,7 +92,6 @@ app.post("/image", (req, res) => {
   let found = false;
   users.forEach((user) => {
     if (user.id == id) {
-      console.log(id);
       found = true;
       user.enteries++;
       return res.json(user.enteries);
@@ -103,6 +102,8 @@ app.post("/image", (req, res) => {
     res.status(404).json("User not found");
   }
 });
+
+app.listen(3000);
 
 /*
 Major endpoints
