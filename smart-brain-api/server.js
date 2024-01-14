@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const knex = require("knex");
 
-const postgres = knex({
+const db = knex({
   client: "pg",
   connection: {
     host: "127.0.0.1",
@@ -13,8 +13,6 @@ const postgres = knex({
     database: "smart-brain",
   },
 });
-
-console.log(postgres.select("*").from("users"));
 
 const database = {
   users: [
@@ -66,18 +64,20 @@ app.post("/signin", (req, res) => {
 
 // Register
 app.post("/register", (req, res) => {
-  const { username, email, password } = req.body;
-  const users = database.users;
-  users.push({
-    id: "125",
-    username: username,
-    email: email,
-    password: password,
-    enteries: 0,
-    joined: new Date(),
-  });
-
-  res.json(users[users.length - 1]);
+  const { username, email } = req.body;
+  db("users")
+    .returning("*")
+    .insert({
+      username: username,
+      email: email,
+      joined: new Date(),
+    })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) =>
+      res.status(400).json("Register failed. Email already in use")
+    );
 });
 
 // Profile/:id
